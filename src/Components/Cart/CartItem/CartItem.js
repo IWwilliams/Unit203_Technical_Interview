@@ -26,7 +26,11 @@ function CartItem(props) {
 
       <div
         className={`${classes.deliveryDate}  ${classes.gridItem5}`}
-      >{`Estimated Delivery Date: ${ESTIMATED_DELIVERY}`}</div>
+      >{`Estimated Delivery Date: ${
+        props.item.estimatedDeliveryDate
+          ? props.item.estimatedDeliveryDate
+          : ESTIMATED_DELIVERY
+      }`}</div>
 
       <div
         className={`${classes.removeButton} ${classes.gridItem6}`}

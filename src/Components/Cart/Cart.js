@@ -1,12 +1,20 @@
+import { useEffect, useState } from "react";
 import classes from "./Cart.module.css";
 import { BLUE } from "../../App";
 import CartItem from "./CartItem/CartItem";
 import CartTotal from "./CartTotal/CartTotal";
-import react, { useState } from "react";
 import DropDown from "../../UI/DropDown/DropDown";
 
 function Cart(props) {
-  const [lineItems, setLineItems] = useState([...props.lineItems]);
+  const [lineItems, setLineItems] = useState([]);
+  useEffect(() => {
+    const results = props.lineItems.filter((x) =>
+      lineItems.some((y) => +x.id === +y.id)
+    );
+    results.length
+      ? setLineItems([...results])
+      : setLineItems([...props.lineItems]);
+  }, [props.lineItems]);
 
   const removeLineItem = (lineItemId) => {
     setLineItems((prev) => {
@@ -30,7 +38,7 @@ function Cart(props) {
     setLineItems((prev) => {
       const itemIndex = prev.findIndex((item) => item.id === +itemId);
       if (itemIndex !== -1) {
-        prev[itemIndex].quantity = prev[itemIndex].quantity + 1;
+        prev[itemIndex].quantity += 1;
       } else {
         prev.push(props.lineItems.filter((item) => +item.id === +itemId)[0]);
       }

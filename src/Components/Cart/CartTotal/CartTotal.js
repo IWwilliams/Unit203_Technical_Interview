@@ -1,5 +1,5 @@
 import classes from "./CartTotal.module.css";
-import { BLUE } from "../../../App";
+import { CartObject, BLUE } from "../../../App";
 function CartTotal(props) {
   let shipping = 0;
   let subtotal = 0;
