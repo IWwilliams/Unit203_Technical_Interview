@@ -30,7 +30,9 @@ function CartItem(props) {
 
       <div
         className={`${classes.removeButton} ${classes.gridItem6}`}
-        onClick={() => {}}
+        onClick={() => {
+          props.removeLineItem(props.item.id);
+        }}
       >
         Remove
       </div>
