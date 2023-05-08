@@ -1,6 +1,6 @@
 import "./App.css";
 import Cart from "./Components/Cart/Cart";
-import react, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import api from "./API/axios";
 //Styling variables
 export const BLUE = "#172162"; //"rgb(23, 33, 98)";
@@ -21,6 +21,7 @@ export const CartObject = {
 
 function App() {
   const [lineItems, setLineItems] = useState([]);
+  const [postal, setPostal] = useState();
 
   const apiCall = async (route) => {
     try {
@@ -37,9 +38,15 @@ function App() {
     apiCall("/getAllLineItems");
   }, []);
 
+  useEffect(() => {
+    if (postal) {
+      apiCall(`/getPostalLineItems/${postal}`);
+    }
+  }, [postal]);
+
   return (
     <>
-      <Cart lineItems={lineItems} />
+      <Cart lineItems={lineItems} postal={postal} setPostal={setPostal} />
     </>
   );
 }

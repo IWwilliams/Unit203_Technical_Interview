@@ -31,6 +31,34 @@ const lineItems = [
   },
 ];
 
+const DELIVERY_DATES = [
+  {
+    postal: "V",
+    ids: [2],
+    estimatedDeliveryDate: "Nov 24, 2021",
+  },
+  {
+    postal: "V",
+    ids: [1, 3],
+    estimatedDeliveryDate: "Nov 19, 2021",
+  },
+  {
+    postal: "M",
+    ids: [2, 3],
+    estimatedDeliveryDate: "Nov 22, 2021",
+  },
+  {
+    postal: "M",
+    ids: [1],
+    estimatedDeliveryDate: "Dec 19, 2021",
+  },
+  {
+    postal: "K",
+    ids: [1, 2, 3],
+    estimatedDeliveryDate: "Dec 24, 2021",
+  },
+];
+
 const getAllLineItems = async (req, res) => {
   try {
     res.status(200).json({ message: "success", data: lineItems });
@@ -41,6 +69,32 @@ const getAllLineItems = async (req, res) => {
   }
 };
 
+const getPostalLineItems = async (req, res) => {
+  try {
+    const foramttedPostal = req.params.postal.toUpperCase();
+    const myMap = new Map([]);
+    DELIVERY_DATES.map((x) => {
+      if (x.postal === foramttedPostal.charAt(0)) {
+        x.ids.map((id) => {
+          myMap.set(id, x.estimatedDeliveryDate);
+        });
+      }
+    });
+
+    const formattedLineItems = lineItems.map((item) => {
+      item.estimatedDeliveryDate = myMap.get(item.id);
+      return item;
+    });
+
+    res.status(200).json({ message: "success", data: formattedLineItems });
+  } catch (e) {
+    res
+      .status(500)
+      .json({ message: "The function call resulted in an error sorry." });
+  }
+};
+
 module.exports = {
   getAllLineItems,
+  getPostalLineItems,
 };
