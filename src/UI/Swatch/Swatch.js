@@ -1,5 +1,5 @@
 import classes from "./Swatch.module.css";
-import { LIGHT_GREY } from "../../../App";
+import { LIGHT_GREY } from "../../App";
 function Swatch(props) {
   return (
     <section className={`${classes.swatch} ${props.className}`}>
