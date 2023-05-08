@@ -19,3 +19,7 @@
   flex-direction: column;
   align-items: center;
 }
+.addToCartForm {
+  display: flex;
+  flex-direction: row;
+}

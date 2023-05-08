@@ -3,20 +3,48 @@ import { BLUE } from "../../App";
 import CartItem from "./CartItem/CartItem";
 import CartTotal from "./CartTotal/CartTotal";
 import react, { useState } from "react";
+import DropDown from "../../UI/DropDown/DropDown";
 
 function Cart(props) {
-  const [lineItems, setLineItems] = useState(props.lineItems);
+  const [lineItems, setLineItems] = useState([...props.lineItems]);
 
   const removeLineItem = (lineItemId) => {
     setLineItems((prev) => {
-      const current = prev.filter((item) => item.id !== lineItemId);
-      return [...current];
+      const removedItemIndex = prev.findIndex((item) => item.id === lineItemId);
+      try {
+        if (prev[removedItemIndex].quantity > 1) {
+          prev[removedItemIndex].quantity -= 1;
+        } else {
+          prev.splice(removedItemIndex, 1);
+        }
+        return [...prev];
+      } catch {
+        prev.splice(removedItemIndex, 1);
+        return [...prev];
+      }
     });
   };
+
+  const addLineItem = (lineItem) => {
+    const itemId = lineItem.target.id.replace("item: ", "");
+    setLineItems((prev) => {
+      const itemIndex = prev.findIndex((item) => item.id === +itemId);
+      if (itemIndex !== -1) {
+        prev[itemIndex].quantity = prev[itemIndex].quantity + 1;
+      } else {
+        prev.push(props.lineItems.filter((item) => +item.id === +itemId)[0]);
+      }
+      return [...prev];
+    });
+  };
+
   return (
     <div className={classes.cart}>
       <div className={classes.header}>
         <h2 style={{ color: BLUE }}>Your Cart</h2>
+        <div className={classes.addToCartForm}>
+          <DropDown onClick={addLineItem} options={props.lineItems} />
+        </div>
       </div>
 
       <div className={classes.cartItems}>

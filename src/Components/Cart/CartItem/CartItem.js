@@ -1,7 +1,7 @@
 import react from "react";
 import classes from "./CartItem.module.css";
 import { BLUE, ESTIMATED_DELIVERY } from "../../../App";
-import Swatch from "../../../UI/Swatch";
+import Swatch from "../../../UI/Swatch/Swatch";
 
 function CartItem(props) {
   return (
