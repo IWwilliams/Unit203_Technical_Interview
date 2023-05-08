@@ -1,6 +1,7 @@
 import classes from "./Cart.module.css";
 import { BLUE } from "../../App";
 import CartItem from "./CartItem/CartItem";
+import CartTotal from "./CartTotal/CartTotal";
 
 function Cart(props) {
   return (
@@ -14,6 +15,7 @@ function Cart(props) {
           return <CartItem key={item.id} item={item} />;
         })}
       </div>
+      <CartTotal />
     </div>
   );
 }
