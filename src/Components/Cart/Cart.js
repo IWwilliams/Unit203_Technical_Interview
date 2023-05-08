@@ -58,7 +58,7 @@ function Cart(props) {
           );
         })}
       </div>
-      <CartTotal />
+      <CartTotal lineItems={lineItems} />
     </div>
   );
 }
